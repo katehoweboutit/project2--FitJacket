@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-5 mt-5 ht-10">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow p-3 mb-4 rounded" style="min-width: 350px;">
+                    <div class="card-body">
+                        <h2>Sign Up</h2>
+                        <hr />
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ template_data.form.as_p }}
+                            <button type="submit"
+                                class="btn bg-dark text-white">Sign Up
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

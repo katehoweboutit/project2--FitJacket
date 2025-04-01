@@ -3,6 +3,6 @@ from django.http import HttpResponse
 
 def index(request):
     template_data = {}
-    template_data['title'] = 'My Fitness'
-    return render(request, 'myFitness/index.html',
+    template_data['title'] = 'Exercises'
+    return render(request, 'exercise/index.html',
                   {'template_data': template_data})

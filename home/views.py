@@ -3,7 +3,9 @@ from django.shortcuts import render
 
 def index(request):
 
-    return render(request, 'home/index.html')
+    template_data = {}
+    template_data['title'] = 'FitJacket'
+    return render(request, 'home/index.html', {'template_data': template_data})
 
 
 def about(request):

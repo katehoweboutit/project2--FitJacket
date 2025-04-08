@@ -3,7 +3,11 @@
     fixed;
   background-size: 100% auto;
 }
-
+.bg-index2{
+  background: url("/static/img/running.png") no-repeat
+    fixed;
+  background-size: 100% auto;
+}
 .card.bg-primary {
   background-color: #0053b1 !important;
 }

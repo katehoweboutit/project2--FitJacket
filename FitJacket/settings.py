@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'accounts',
     'home',
     'myFitness',
-    'eventsChallenges',
     'friends',
     'exercise',
     ]

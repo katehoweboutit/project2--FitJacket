@@ -1,0 +1,45 @@
+.bg-index{
+  background: url("/static/img/rain.jpg") no-repeat
+    fixed;
+  background-size: 100% auto;
+}
+
+.card.bg-primary {
+  background-color: #0d5464 !important;
+}
+.navbar a.nav-link {
+  color: #FFFEF6;
+}
+.bg-dark {
+  background-color: #0d5464 !important;
+}
+.ms-footer {
+  background-color: #0d5464;
+}
+.ms-footer p {
+  color: #7F7F7F;
+  font-size: 13px;
+}
+.ms-footer a:hover {
+  color: #B0B0FF;
+  text-decoration: none;
+}
+.ms-footer-bottom span{
+  font-size: 13px;
+  line-height: 38px;
+}
+.ms-footer-bottom a {
+  color: #6ab43e;
+  text-decoration: none;
+}
+.ms-footer-bottom a:hover {
+  color: #fff;
+}
+.img-card-200 {
+  width: 100px;
+  max-height: 200px;
+}
+.img-card-400 {
+  width: 200px;
+  max-height: 400px;
+}

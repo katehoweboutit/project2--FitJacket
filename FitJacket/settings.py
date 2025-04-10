@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'accounts',
     'home',
     'myFitness',
-    'eventsChallenges',
     'friends',
     'exercise',
     ]
@@ -60,7 +59,7 @@ ROOT_URLCONF = 'FitJacket.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [os.path.join(BASE_DIR, 'FitJacket/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -131,3 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Custom User Model
 AUTH_USER_MODEL = 'accounts.FitUser'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'FitJacket/static/',
+]

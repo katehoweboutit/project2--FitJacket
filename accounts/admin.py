@@ -25,5 +25,10 @@ class FitUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2', 'first_name', 'last_name', 'is_active', 'is_staff')}
         ),
     )
+    actions = ['add_friend']
+    def add_friend(self, request, queryset):
+        for friend in queryset:
+            #add to this user's list of friends
+            friend.save()
 
 admin.site.register(FitUser, FitUserAdmin)

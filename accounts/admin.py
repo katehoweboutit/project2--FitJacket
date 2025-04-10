@@ -9,13 +9,13 @@ class FitUserAdmin(UserAdmin):
     add_form = FitUserCreationForm #new
     form = UserChangeForm #new
     model = FitUser
-    list_display = ['email', 'first_name', 'last_name', 'is_staff', 'is_active', 'age', 'weight']
-    list_filter = ['is_staff', 'is_active']
-    search_fields = ['email', 'first_name', 'last_name', 'age', 'weight']
+    list_display = ['email', 'first_name', 'last_name', 'is_staff', 'is_active', 'age', 'weight', 'fit_points']
+    list_filter = ['is_staff', 'is_active', 'age', 'weight', 'fit_points']
+    search_fields = ['email', 'first_name', 'last_name', 'age', 'weight', 'fit_points']
     ordering = ['email']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'age', 'weight', 'LifestyleHabits', 'AdditionalNotes')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'age', 'weight', 'fit_points', 'LifestyleHabits', 'AdditionalNotes')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
     )

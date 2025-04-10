@@ -24,10 +24,11 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)  # Required for admin access
     date_joined = models.DateTimeField(auto_now_add=True)
-    age = models.PositiveIntegerField(default=20)
-    weight = models.PositiveIntegerField(default=180)
+    age = models.PositiveIntegerField(default=0)
+    weight = models.PositiveIntegerField(default=0)
     LifestyleHabits = models.TextField(blank=True)
     AdditionalNotes = models.TextField(blank=True)
+    fit_points = models.PositiveIntegerField(default=0)
 
     objects = CustomUserManager()
 

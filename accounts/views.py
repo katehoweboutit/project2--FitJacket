@@ -2,7 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
-from .forms import CustomUserCreationForm, CustomErrorList
+#from .forms import CustomUserCreationForm, CustomErrorList, FitUserCreationForm
+#
+from .forms import FitUserCreationForm
+#
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -14,13 +17,15 @@ def signup(request):
     template_data['title'] = 'Sign Up'
 
     if request.method == 'GET':
-        template_data['form'] = CustomUserCreationForm()
+        template_data['form'] = FitUserCreationForm()
+        #template_data['form'] = CustomUserCreationForm()
         return render(request, 'accounts/signup.html',
                       {'template_data': template_data})
 
     elif request.method == 'POST':
-        form = CustomUserCreationForm(request.POST,
-                error_class=CustomErrorList)
+        form = FitUserCreationForm(request.POST)
+        #form = CustomUserCreationForm(request.POST,
+                #error_class=CustomErrorList)
         if form.is_valid():
             form.save()
             return redirect('accounts.login')

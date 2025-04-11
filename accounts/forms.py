@@ -1,3 +1,12 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import FitUser
+
+class FitUserCreationForm(UserCreationForm):
+    class Meta:
+        model = FitUser
+        fields = ('email', 'first_name', 'last_name', 'age', 'weight', 'LifestyleHabits', 'AdditionalNotes')
+"""
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
@@ -22,3 +31,4 @@ class CustomErrorList(ErrorList):
 
         return mark_safe(''.join([
                 f'<div class="alert alert-danger" role="alert"> {e}</div>' for e in self]))
+"""

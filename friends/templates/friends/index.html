@@ -5,6 +5,17 @@
     <h2> Friends List </h2>
     <a href="{% url 'friends.add_friend' %}" class="btn bg-dark text-white">
             Add Friends </a>
+    <div class="row">
+      {% for friend in template_data.friends %}
+      <div class="col-md-4 col-lg-3 mb-2">
+        <div class="p-2 card align-items-center pt-4">
+          <div class="card-body text-center">
+              <a>{{friend.first_name}} {{friend.last_name}}: {{friend.fit_points}}</a>
+          </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
 
 
 

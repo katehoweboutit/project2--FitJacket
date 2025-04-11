@@ -9,16 +9,16 @@
   background-size: 100% auto;
 }
 .card.bg-primary {
-  background-color: #0053b1 !important;
+  background-color: #000000 !important;
 }
 .navbar a.nav-link {
   color: #FFFEF6;
 }
 .bg-dark {
-  background-color: #0053b1 !important;
+  background-color: #000000 !important;
 }
 .ms-footer {
-  background-color: #0053b1;
+  background-color: #000000;
 }
 .ms-footer p {
   color: #7F7F7F;

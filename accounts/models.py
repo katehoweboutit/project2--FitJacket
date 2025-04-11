@@ -30,6 +30,8 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
     LifestyleHabits = models.TextField(blank=True)
     AdditionalNotes = models.TextField(blank=True)
     fit_points = models.PositiveIntegerField(default=0)
+    id = models.AutoField(primary_key=True)
+    friends = models.ManyToManyField('self', blank=True)
 
     objects = CustomUserManager()
 

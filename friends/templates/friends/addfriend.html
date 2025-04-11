@@ -29,12 +29,12 @@
       <div class="col-md-4 col-lg-3 mb-2">
         <div class="p-2 card align-items-center pt-4">
           <div class="card-body text-center">
-            <a>
-            {{ user.first_name }} {{ user.last_name }}
-            </a>
+              <form action="/friend/" method="post">
+            <input id="first" type="text" name="first" value="{{ user.first_name }}"> <a> </a>
+                  <input id="last" type="text" name="last" value="{{ user.last_name }}">
+            <input type="submit" value="Add Friend">
+            </form>
           </div>
-                  <div><button class="btn bg-dark text-white"
-                  type="button">Add Friend</button></div>
             </div>
           </div>
       {% endfor %}

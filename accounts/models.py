@@ -19,6 +19,7 @@ class CustomUserManager(BaseUserManager):
 
 class FitUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
+    username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
@@ -32,8 +33,8 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']  # Specify fields required for createsuperuser
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']  # Specify fields required for createsuperuser
 
     def __str__(self):
-        return self.email
+        return self.username

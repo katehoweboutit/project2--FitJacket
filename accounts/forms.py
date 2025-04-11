@@ -5,7 +5,7 @@ from .models import FitUser
 class FitUserCreationForm(UserCreationForm):
     class Meta:
         model = FitUser
-        fields = ('email', 'first_name', 'last_name', 'age', 'weight', 'LifestyleHabits', 'AdditionalNotes')
+        fields = ('email', 'username', 'first_name', 'last_name', 'age', 'weight', 'LifestyleHabits', 'AdditionalNotes')
 """
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.utils import ErrorList

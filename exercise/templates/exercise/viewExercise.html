@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-placeholder view exercise view {{ template_data.exercise_id }}
+  <form action="{% url 'exercise.index' %}">
+          <button type="submit">Back</button>
+  </form>
+  <p> exercise name: {{ template_data.exercise.exercise.name }} </p>
+  <p> muscle group: {{ template_data.exercise.exercise.muscle_group }} </p>
+  <p> required equipment: {{ template_data.exercise.exercise.equipment_needed }} </p>
+  <p> instructions: {{ template_data.exercise.exercise.instructions }} </p>
+  <p> duration: {{ template_data.exercise.duration_minutes }} </p>
+  <p> FitPoints reward: {{ template_data.exercise.fitpoint_reward }} </p>
+  {% if not template_data.exercise.completed %}
+  <form action="{% url 'exercise.completeExercise' id=template_data.exercise.id%}">
+          <button type="submit">Complete Exercise</button>
+  </form>
+  {% endif %}
+
 {% endblock content %}

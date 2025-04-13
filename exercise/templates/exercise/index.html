@@ -11,6 +11,7 @@
 
         <div class="row">
       {% for exercise in template_data.exercise_assignments %}
+        {% if not exercise.completed %}
       <div class="col-md-4 col-lg-3 mb-2">
         <div class="p-2 card align-items-center pt-4">
 
@@ -24,6 +25,26 @@
           </div>
 </div>
           </div>
+        {% endif %}
+      {% endfor %}
+
+        Completed:
+        {% for exercise in template_data.exercise_assignments %}
+        {% if exercise.completed %}
+      <div class="col-md-4 col-lg-3 mb-2">
+        <div class="p-2 card align-items-center pt-4">
+
+          <div class="card-body text-center">
+            <p class="mb-2">{{ exercise.exercise }}</p>
+            <p class="mb-2">{{ exercise.duration_minutes }} minutes</p>
+            <p class="mb-2">{{ exercise.fitpoint_reward }} FitPoints</p>
+            <a href="{% url 'exercise.viewExercise' id=exercise.id %}" class="btn bg-dark text-white">
+             View Exercise
+            </a>
+          </div>
+</div>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
 

@@ -27,9 +27,31 @@ def new_exercise(request):
                   {'template_data': template_data})
 
 def view_exercise(request, id):
+    exercise = ExerciseAssignment.objects.get(id=id)
+    if exercise.user != request.user:
+        return redirect('exercise.index')
+
     template_data = {}
     template_data['title'] = 'View Exercise'
-    template_data['exercise_id'] = id
+    template_data['exercise'] = exercise
 
     return render(request, 'exercise/viewExercise.html',
+                  {'template_data': template_data})
+
+def complete_exercise(request, id):
+    exercise = ExerciseAssignment.objects.get(id=id)
+    if exercise.user != request.user or exercise.completed:
+        return redirect('exercise.index')
+
+    exercise.completed = True
+    exercise.save()
+    request.user.fit_points += exercise.fitpoint_reward
+    request.user.save()
+
+    template_data = {}
+    template_data['title'] = 'Complete Exercise'
+    template_data['exercise'] = exercise
+    template_data['user_name'] = request.user.first_name
+
+    return render(request, 'exercise/complete_exercise.html',
                   {'template_data': template_data})

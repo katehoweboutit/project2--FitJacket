@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .utils import muscle_groups
+from .utils import update_db_exercises
 
 def index(request):
     template_data = {}
@@ -11,7 +12,8 @@ def index(request):
 
 def new_exercise(request):
     if request.method == 'POST':
-        print(request.POST.getlist('muscle_group'))
+        checked_muscle_groups = request.POST.getlist('muscle_group')
+        update_db_exercises(checked_muscle_groups)
 
     template_data = {}
     template_data['title'] = 'New Exercise'

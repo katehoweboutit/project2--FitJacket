@@ -13,5 +13,9 @@ class Exercise(models.Model):
 
 class ExerciseAssignment(models.Model):
     id = models.AutoField(primary_key=True)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     user = models.ForeignKey(FitUser, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.exercise.name} - {self.user.username}'

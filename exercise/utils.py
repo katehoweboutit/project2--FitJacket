@@ -1,5 +1,6 @@
 from .models import Exercise
 import requests
+from openai import OpenAI
 
 muscle_groups = ['abdominals', 'abductors', 'adductors', 'biceps', 'calves',
                  'chest', 'forearms', 'glutes', 'hamstrings', 'lats', 'lower_back',
@@ -63,7 +64,7 @@ def get_gpt_prompt(user, exercise_options):
     f"weight, and lifestyle habits. Also come up with a number that is a multiple of 5, 5-100 that "
     f"represents the difficulty and duration of the exercise\n\n"
 
-    f"Please respond in the following format:")
+    f"Please respond in this EXACT following format, not adding any additional words or symbols:")
 
     if single_exercise:
         prompt += """
@@ -91,7 +92,18 @@ difficulty: {number 5-100 to represent difficulty}
 
 def get_api_exercises_response(user, exercise_options):
     prompt = get_gpt_prompt(user, exercise_options)
-    print(prompt)
+
+    client = OpenAI()
+
+    response = client.responses.create(
+        model="gpt-4o-mini",
+        input=prompt
+    )
+
+    return response.output_text
+
+def parse_gpt_response(gpt_response):
+    pass # TODO
 
 
 def update_assigned_exercises(user, muscle_groups):
@@ -111,4 +123,6 @@ def update_assigned_exercises(user, muscle_groups):
         exercise_options.append(Exercise.objects.filter(
                 muscle_group=muscle_group).values_list('name', flat=True))
 
-    api_response = get_api_exercises_response(user, exercise_options)
+    gpt_response = get_api_exercises_response(user, exercise_options)
+
+    recommended_exercises = parse_gpt_response(gpt_response)

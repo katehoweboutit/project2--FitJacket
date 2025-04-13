@@ -18,6 +18,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class FitUser(AbstractBaseUser, PermissionsMixin):
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=30)

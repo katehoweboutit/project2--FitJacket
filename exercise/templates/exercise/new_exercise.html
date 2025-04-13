@@ -5,17 +5,18 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col mx-auto mb-3">
-        which muscle group are you trying to train? check all that apply, and our AI assistant will
+        which muscle groups are you trying to train? check all that apply, and our AI assistant will
         recommend you one exercise per muscle group you select.
 
+      <form method="POST">
+        {% csrf_token %}
         <table>
           {% for muscle_group in template_data.muscle_groups %}
-          <tr>
-            <td><input type="checkbox" id={{ muscle_group }}><label for={{ muscle_group }}>  {{ muscle_group }}</label></td>
-          </tr>
+          <input type="checkbox" name="muscle_group" value={{ muscle_group }}> {{ muscle_group }}<br>
           {% endfor %}
-
         </table>
+          <button type="submit">create new Exercises</button>
+        </form>
       </div>
     </div>
   </div>

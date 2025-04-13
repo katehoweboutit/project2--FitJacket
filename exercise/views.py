@@ -10,6 +10,9 @@ def index(request):
 
 
 def new_exercise(request):
+    if request.method == 'POST':
+        print(request.POST.getlist('muscle_group'))
+
     template_data = {}
     template_data['title'] = 'New Exercise'
     template_data['muscle_groups'] = muscle_groups

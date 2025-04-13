@@ -8,6 +8,25 @@
         <form action="{% url 'exercise.new_exercise' %}">
           <button type="submit">New Exercise?</button>
         </form>
+
+        <div class="row">
+      {% for exercise in template_data.exercise_assignments %}
+      <div class="col-md-4 col-lg-3 mb-2">
+        <div class="p-2 card align-items-center pt-4">
+
+          <div class="card-body text-center">
+            <p class="mb-2">{{ exercise.exercise }}</p>
+            <p class="mb-2">{{ exercise.duration_minutes }} minutes</p>
+            <p class="mb-2">{{ exercise.fitpoint_reward }} FitPoints</p>
+            <a href="{% url 'exercise.viewExercise' id=exercise.id %}" class="btn bg-dark text-white">
+             View Exercise
+            </a>
+          </div>
+</div>
+          </div>
+      {% endfor %}
+    </div>
+
       </div>
     </div>
   </div>

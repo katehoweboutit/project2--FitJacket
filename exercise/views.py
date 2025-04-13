@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .utils import muscle_groups
-from .utils import update_db_exercises
-from .utils import update_assigned_exercises
+from .utils import muscle_groups, update_db_exercises, update_assigned_exercises
 
 def index(request):
     template_data = {}

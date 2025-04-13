@@ -1,4 +1,4 @@
-from .models import Exercise
+from .models import Exercise, ExerciseAssignment
 import requests
 from openai import OpenAI
 
@@ -102,8 +102,34 @@ def get_api_exercises_response(user, exercise_options):
 
     return response.output_text
 
-def parse_gpt_response(gpt_response):
-    pass # TODO
+def create_exercise_assignments(user, gpt_response):
+    # try:
+        exercises = gpt_response.split("\n\n")
+
+        for exercise_text in exercises:
+            exercise_lines = exercise_text.split("\n")
+
+            exercise_name = exercise_lines[1][6:].strip()
+            print(f"\'{exercise_name}\'")
+            exercise_duration = int(exercise_lines[2].split(" ")[1].strip())
+            print(exercise_duration)
+            exercise_fitpoints = int(exercise_lines[3][12:].strip())
+            print(exercise_fitpoints)
+            exercise_object = Exercise.objects.filter(name__iexact=exercise_name)[0]
+            print(exercise_object)
+
+            ExerciseAssignment.objects.create(
+                exercise=exercise_object,
+                duration_minutes=exercise_duration,
+                fitpoint_reward=exercise_fitpoints,
+                user=user,
+                completed=False
+            )
+    #
+    # except Exception as e:
+    #     print("problem parsing AI output")
+    #     print(e)
+    #     return []
 
 
 def update_assigned_exercises(user, muscle_groups):
@@ -125,4 +151,4 @@ def update_assigned_exercises(user, muscle_groups):
 
     gpt_response = get_api_exercises_response(user, exercise_options)
 
-    recommended_exercises = parse_gpt_response(gpt_response)
+    create_exercise_assignments(user, gpt_response)

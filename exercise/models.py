@@ -15,6 +15,7 @@ class ExerciseAssignment(models.Model):
     id = models.AutoField(primary_key=True)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     user = models.ForeignKey(FitUser, on_delete=models.CASCADE)
+    fitpoint_reward = models.IntegerField()
     completed = models.BooleanField(default=False)
     duration_minutes = models.IntegerField()
 

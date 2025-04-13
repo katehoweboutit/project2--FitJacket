@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .utils import muscle_groups, update_db_exercises, update_assigned_exercises
+from .utils import all_muscle_groups, update_db_exercises, update_assigned_exercises
 
 def index(request):
     template_data = {}
@@ -18,7 +18,7 @@ def new_exercise(request):
 
     template_data = {}
     template_data['title'] = 'New Exercise'
-    template_data['muscle_groups'] = muscle_groups
+    template_data['muscle_groups'] = all_muscle_groups
 
     return render(request, 'exercise/new_exercise.html',
                   {'template_data': template_data})

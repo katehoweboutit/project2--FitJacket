@@ -2,7 +2,7 @@ from .models import Exercise, ExerciseAssignment
 import requests
 from openai import OpenAI
 
-muscle_groups = ['abdominals', 'abductors', 'adductors', 'biceps', 'calves',
+all_muscle_groups = ['abdominals', 'abductors', 'adductors', 'biceps', 'calves',
                  'chest', 'forearms', 'glutes', 'hamstrings', 'lats', 'lower_back',
                  'middle_back', 'neck', 'quadriceps', 'traps', 'triceps']
 
@@ -103,20 +103,16 @@ def get_api_exercises_response(user, exercise_options):
     return response.output_text
 
 def create_exercise_assignments(user, gpt_response):
-    # try:
-        exercises = gpt_response.split("\n\n")
+    exercises = gpt_response.split("\n\n")
 
-        for exercise_text in exercises:
+    for exercise_text in exercises:
+        try:
             exercise_lines = exercise_text.split("\n")
 
-            exercise_name = exercise_lines[1][6:].strip()
-            print(f"\'{exercise_name}\'")
+            exercise_name = exercise_lines[1][6:].strip()[:-1]
             exercise_duration = int(exercise_lines[2].split(" ")[1].strip())
-            print(exercise_duration)
             exercise_fitpoints = int(exercise_lines[3][12:].strip())
-            print(exercise_fitpoints)
-            exercise_object = Exercise.objects.filter(name__iexact=exercise_name)[0]
-            print(exercise_object)
+            exercise_object = Exercise.objects.filter(name__icontains=exercise_name)[0]
 
             ExerciseAssignment.objects.create(
                 exercise=exercise_object,
@@ -125,11 +121,10 @@ def create_exercise_assignments(user, gpt_response):
                 user=user,
                 completed=False
             )
-    #
-    # except Exception as e:
-    #     print("problem parsing AI output")
-    #     print(e)
-    #     return []
+
+        except Exception as e:
+            print("problem parsing AI output:")
+            print(e)
 
 
 def update_assigned_exercises(user, muscle_groups):

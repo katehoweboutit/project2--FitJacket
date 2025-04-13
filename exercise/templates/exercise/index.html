@@ -5,16 +5,49 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col mx-auto mb-3">
-        <h2>What was your workout?!</h2>
-        <hr />
-          <div class="dropdown">
-              <button class="dropbtn">Type of exercises?</button>
-              <div class="dropdown-content">
-              <a href="{% url 'home.about' %}"">Cardio</a>
-              <a href="#">Weights</a>
-              <a href="#">Yoga type stuff</a>
-              </div>
+        <form action="{% url 'exercise.new_exercise' %}">
+          <button type="submit">New Exercise?</button>
+        </form>
+
+        <div class="row">
+      {% for exercise in template_data.exercise_assignments %}
+        {% if not exercise.completed %}
+      <div class="col-md-4 col-lg-3 mb-2">
+        <div class="p-2 card align-items-center pt-4">
+
+          <div class="card-body text-center">
+            <p class="mb-2">{{ exercise.exercise }}</p>
+            <p class="mb-2">{{ exercise.duration_minutes }} minutes</p>
+            <p class="mb-2">{{ exercise.fitpoint_reward }} FitPoints</p>
+            <a href="{% url 'exercise.viewExercise' id=exercise.id %}" class="btn bg-dark text-white">
+             View Exercise
+            </a>
           </div>
+</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+        Completed:
+        {% for exercise in template_data.exercise_assignments %}
+        {% if exercise.completed %}
+      <div class="col-md-4 col-lg-3 mb-2">
+        <div class="p-2 card align-items-center pt-4">
+
+          <div class="card-body text-center">
+            <p class="mb-2">{{ exercise.exercise }}</p>
+            <p class="mb-2">{{ exercise.duration_minutes }} minutes</p>
+            <p class="mb-2">{{ exercise.fitpoint_reward }} FitPoints</p>
+            <a href="{% url 'exercise.viewExercise' id=exercise.id %}" class="btn bg-dark text-white">
+             View Exercise
+            </a>
+          </div>
+</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
       </div>
     </div>
   </div>

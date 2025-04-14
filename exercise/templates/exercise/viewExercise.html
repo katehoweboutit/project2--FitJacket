@@ -8,7 +8,7 @@
   <p> muscle group: {{ template_data.exercise.exercise.muscle_group }} </p>
   <p> required equipment: {{ template_data.exercise.exercise.equipment_needed }} </p>
   <p> instructions: {{ template_data.exercise.exercise.instructions }} </p>
-  <p> duration: {{ template_data.exercise.duration_minutes }} </p>
+  <p> duration: {{ template_data.exercise.duration_minutes }} minutes</p>
   <p> FitPoints reward: {{ template_data.exercise.fitpoint_reward }} </p>
   {% if not template_data.exercise.completed %}
   <form action="{% url 'exercise.completeExercise' id=template_data.exercise.id%}">

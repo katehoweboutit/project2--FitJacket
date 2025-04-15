@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 # Create your models here.
@@ -32,7 +34,7 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
     AdditionalNotes = models.TextField(blank=True)
     fit_points = models.PositiveIntegerField(default=0)
     id = models.AutoField(primary_key=True)
-    friends = models.ManyToManyField('self', blank=True)
+    friends = models.TextField(blank=True)
 
     objects = CustomUserManager()
 
@@ -41,3 +43,8 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.username = self.email
+        super(FitUser, self).save(*args, **kwargs)
+

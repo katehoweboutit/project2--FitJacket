@@ -1,12 +1,20 @@
+import io
+import json
+
 from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 from accounts.models import FitUser
+from accounts.forms import FitUserCreationForm
 
+@csrf_exempt
 def add_friend(request):
     template_data = {}
     template_data['title'] = 'Friends'
+    users = FitUser.objects.exclude(username=request.user.username)
+    template_data['users'] = users
     if request.method == 'GET':
         search_term = request.GET.get('search')
         if search_term:
@@ -15,23 +23,45 @@ def add_friend(request):
             users_last = FitUser.objects.filter(last_name__icontains=search_term)
             users = users.union(users_last)
         else:
-            users = FitUser.objects.all()
+            users = FitUser.objects.exclude(username=request.user.username)
         template_data['users'] = users
         return render(request, 'friends/addfriend.html',
                       {'template_data': template_data})
-    else:
-        #friend = FriendForm(request.POST)
-        friend = FitUser.objects.filter(Q(first_name=request.POST.get('first')) | Q(last_name=request.POST.get('last')))
-        current_user = request.user
-        FitUser(current_user).friends.add(friend)
-        return render(request, 'friends/index.html', {'template_data' : template_data})
+    elif request.method == 'POST':
+        first = request.POST.get('username')
+        print(first)
+        friend = FitUser.objects.filter(Q(username=first)).first()
+        print(friend)
+        print(friend.username)
+        current_user = FitUser(request.user)
+        strio = io.StringIO(current_user.friends)
+        try :
+            jlist = json.load(strio)
+        except json.decoder.JSONDecodeError:
+            jlist = []
+        if friend:
+            jlist.append(friend.username)
+            request.user.friends = json.dumps(jlist)
+            request.user.save(update_fields=['friends'])
+            print(request.user.friends + " friends updated")
+        #return render(request, 'friends/index.html', {'template_data' : template_data})
+        return index(request)
 
 def index(request):
     #List of all current friends from database
     # find out how to get the current user, then reference their list of friends (from a database)
     template_data = {}
     template_data['title'] = 'Friends'
-    current_user = request.user
-    template_data['friends'] = FitUser(current_user).friends
+    if request.user.friends:
+        print("friends:" + request.user.friends)
+        friends = json.load(io.StringIO(request.user.friends))
+        fri = FitUser.objects.filter(Q(username=""))
+        for friend in friends:
+            fri = fri.union(FitUser.objects.filter(Q(username=friend)))
+        template_data['friends'] = fri
+    else:
+        print("no friends")
+        template_data['friends'] = []
     return render(request, 'friends/index.html',
                   {'template_data': template_data})
+

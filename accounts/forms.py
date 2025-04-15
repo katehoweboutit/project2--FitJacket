@@ -1,11 +1,19 @@
+from typing import Any
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import FitUser
 
 class FitUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(FitUserCreationForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = FitUser
         fields = ('email', 'username', 'first_name', 'last_name', 'age', 'weight', 'LifestyleHabits', 'AdditionalNotes')
+
+
+
 """
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.utils import ErrorList

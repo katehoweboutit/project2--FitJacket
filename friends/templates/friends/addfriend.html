@@ -29,9 +29,9 @@
       <div class="col-md-4 col-lg-3 mb-2">
         <div class="p-2 card align-items-center pt-4">
           <div class="card-body text-center">
-              <form action="/friend/" method="post">
-            <input id="first" type="text" name="first" value="{{ user.first_name }}"> <a> </a>
-                  <input id="last" type="text" name="last" value="{{ user.last_name }}">
+              <form method="POST">
+                  {% csrf_token %}
+            <input id="username" type="text" name="username" value="{{ user.username }}"> <a> </a>
             <input type="submit" value="Add Friend">
             </form>
           </div>

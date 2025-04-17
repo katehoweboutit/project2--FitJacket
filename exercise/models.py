@@ -19,6 +19,7 @@ class ExerciseAssignment(models.Model):
     fitpoint_reward = models.IntegerField(default=5)
     completed = models.BooleanField(default=False)
     duration_minutes = models.IntegerField(default=10)
+    # can add time here
 
     def __str__(self):
         return f'{self.exercise.name} - {self.duration_minutes} minutes - {self.user.username}'

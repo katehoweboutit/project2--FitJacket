@@ -31,7 +31,10 @@
           <div class="card-body text-center">
               <form method="POST">
                   {% csrf_token %}
-            <input id="username" type="text" name="username" value="{{ user.username }}"> <a> </a>
+            <input id="username" type="text" name="username" value="{{ user.username }}" readonly> <a> </a>
+                  <div class="card-body text-center">
+              <a>{{user.first_name}} {{user.last_name}}</a>
+                </div>
             <input type="submit" value="Add Friend">
             </form>
           </div>

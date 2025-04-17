@@ -21,18 +21,17 @@ def add_friend(request):
         # show all friends with that in name
             users = FitUser.objects.filter(first_name__icontains=search_term)
             users_last = FitUser.objects.filter(last_name__icontains=search_term)
+            users_name = FitUser.objects.filter(username__icontains=search_term)
             users = users.union(users_last)
+            users = users.union(users_name)
         else:
-            users = FitUser.objects.exclude(username=request.user.username)
+            users = FitUser.objects.exclude(Q(username=request.user.username) | Q(username=""))
         template_data['users'] = users
         return render(request, 'friends/addfriend.html',
                       {'template_data': template_data})
     elif request.method == 'POST':
         first = request.POST.get('username')
-        print(first)
         friend = FitUser.objects.filter(Q(username=first)).first()
-        print(friend)
-        print(friend.username)
         current_user = FitUser(request.user)
         strio = io.StringIO(current_user.friends)
         try :
@@ -43,7 +42,6 @@ def add_friend(request):
             jlist.append(friend.username)
             request.user.friends = json.dumps(jlist)
             request.user.save(update_fields=['friends'])
-            print(request.user.friends + " friends updated")
         #return render(request, 'friends/index.html', {'template_data' : template_data})
         return index(request)
 
@@ -53,14 +51,12 @@ def index(request):
     template_data = {}
     template_data['title'] = 'Friends'
     if request.user.friends:
-        print("friends:" + request.user.friends)
         friends = json.load(io.StringIO(request.user.friends))
-        fri = FitUser.objects.filter(Q(username=""))
+        fri = FitUser.objects.filter(Q(username=" "))
         for friend in friends:
             fri = fri.union(FitUser.objects.filter(Q(username=friend)))
         template_data['friends'] = fri
     else:
-        print("no friends")
         template_data['friends'] = []
     return render(request, 'friends/index.html',
                   {'template_data': template_data})

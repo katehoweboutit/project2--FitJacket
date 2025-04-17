@@ -33,9 +33,10 @@ def add_friend(request):
         first = request.POST.get('username')
         friend = FitUser.objects.filter(Q(username=first)).first()
         current_user = FitUser(request.user)
-        strio = io.StringIO(current_user.friends)
+        #strio = io.StringIO(current_user.friends)
         try :
-            jlist = json.load(strio)
+            #jlist = json.load(strio)
+            jlist = json.loads(request.user.friends)
         except json.decoder.JSONDecodeError:
             jlist = []
         if friend:
@@ -51,11 +52,12 @@ def index(request):
     template_data = {}
     template_data['title'] = 'Friends'
     if request.user.friends:
-        friends = json.load(io.StringIO(request.user.friends))
+        friends = json.loads(request.user.friends)
         fri = FitUser.objects.filter(Q(username=" "))
         for friend in friends:
             fri = fri.union(FitUser.objects.filter(Q(username=friend)))
         template_data['friends'] = fri
+        template_data['friends'] = fri.order_by('-fit_points')
     else:
         template_data['friends'] = []
     return render(request, 'friends/index.html',

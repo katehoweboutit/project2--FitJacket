@@ -26,6 +26,12 @@ def add_friend(request):
             users = users.union(users_name)
         else:
             users = FitUser.objects.exclude(Q(username=request.user.username) | Q(username=""))
+        if request.user.friends:
+            friends = json.loads(request.user.friends)
+            fri = FitUser.objects.filter(Q(username=" "))
+            for friend in friends:
+                fri = fri.union(FitUser.objects.filter(Q(username=friend)))
+            users = users.difference(fri)
         template_data['users'] = users
         return render(request, 'friends/addfriend.html',
                       {'template_data': template_data})
@@ -56,7 +62,7 @@ def index(request):
         fri = FitUser.objects.filter(Q(username=" "))
         for friend in friends:
             fri = fri.union(FitUser.objects.filter(Q(username=friend)))
-        template_data['friends'] = fri
+        fri = fri.union(FitUser.objects.filter(Q(username=request.user.username)))
         template_data['friends'] = fri.order_by('-fit_points')
     else:
         template_data['friends'] = []

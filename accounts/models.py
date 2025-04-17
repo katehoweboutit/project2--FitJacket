@@ -43,8 +43,4 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.username = self.email
-        super(FitUser, self).save(*args, **kwargs)
 

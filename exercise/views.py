@@ -6,7 +6,7 @@ from .models import ExerciseAssignment
 def index(request):
     template_data = {}
     template_data['title'] = 'Exercises'
-    template_data['exercise_assignments'] = ExerciseAssignment.objects.filter(user=request.user)
+    template_data['exercise_assignments'] = ExerciseAssignment.objects.filter(user=request.user)[::-1]
     return render(request, 'exercise/index.html',
                   {'template_data': template_data})
 

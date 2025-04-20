@@ -46,9 +46,9 @@ def get_gpt_prompt(user, exercise_options):
     prompt = (f"Your job is to recommend {len(exercise_options)} exercise{'s' * (not single_exercise)} "
     f"to the user of a fitness recommendation website.\nThis user is {user.age} years old, and their weight "
     f"is {user.weight} lbs. Here are some optional lifestyle habits the user entered when they made their account:"
-    f"\n\"{user.LifestyleHabits}\"\n"
+    f"\n\"{user.Lifestyle_Habits}\"\n"
     f"And here are some optional additional notes the user entered when they made their account:"
-    f"\n\"{user.AdditionalNotes}\"\n"
+    f"\n\"{user.Additional_Notes}\"\n"
 
     f"\nYou will recommend {len(exercise_options)} exercise{'s' * (not single_exercise)}.")
 

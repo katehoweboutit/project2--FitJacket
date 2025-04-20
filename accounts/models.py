@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.core.validators import validate_email
 # Create your models here.
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -18,7 +19,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class FitUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, validators=[validate_email])
     username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -27,8 +28,8 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     age = models.PositiveIntegerField(default=0)
     weight = models.PositiveIntegerField(default=0)
-    LifestyleHabits = models.TextField(blank=True)
-    AdditionalNotes = models.TextField(blank=True)
+    Lifestyle_Habits = models.TextField(blank=True)
+    Additional_Notes = models.TextField(blank=True)
     fit_points = models.PositiveIntegerField(default=0)
 
     objects = CustomUserManager()

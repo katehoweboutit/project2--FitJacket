@@ -15,7 +15,7 @@ class FitUserAdmin(UserAdmin):
     ordering = ['email']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username', 'first_name', 'last_name', 'age', 'weight', 'fit_points', 'LifestyleHabits', 'AdditionalNotes')}),
+        ('Personal info', {'fields': ('username', 'first_name', 'last_name', 'age', 'weight', 'fit_points', 'Lifestyle_Habits', 'Additional_Notes')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
     )

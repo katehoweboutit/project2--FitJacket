@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
-#from .forms import CustomUserCreationForm, CustomErrorList, FitUserCreationForm
+from .forms import FitUserCreationForm
 #
 from .forms import FitUserCreationForm
 #
@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def signup(request):
+    print("DEBUG: View loaded", request.method)
+
     template_data = {}
     template_data['title'] = 'Sign Up'
 
@@ -23,16 +25,23 @@ def signup(request):
                       {'template_data': template_data})
 
     elif request.method == 'POST':
+        #form = FitUserCreationForm(request.POST)
+
         form = FitUserCreationForm(request.POST)
-        #form = CustomUserCreationForm(request.POST,
-                #error_class=CustomErrorList)
+        print("DEBUG: Form submitted.")
+        print("DEBUG: is_valid:", form.is_valid())
+        print("DEBUG: form.errors:", form.errors)
+        print("Form submitted. Is valid?", form.is_valid())
+        print("Form errors:", form.errors)
         if form.is_valid():
             form.save()
             return redirect('accounts.login')
         else:
+            print("Form Errors:", form.errors)
             template_data['form'] = form
             return render(request, 'accounts/signup.html',
                       {'template_data': template_data})
+            #return render(request, 'accounts/signup.html', {'template_data': template_data})
 
 
 def login(request):

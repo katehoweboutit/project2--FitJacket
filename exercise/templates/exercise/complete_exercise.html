@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+  Hey {{ template_data.user_name }}, Congratulations on completing your {{ template_data.exercise.exercise.name }}!
+  You have earned {{ template_data.exercise.fitpoint_reward }} FitPoints as a reward! Keep up the
+  great work!
+
+  <form action="{% url 'exercise.index' %}">
+          <button type="submit">Back</button>
+  </form>
+
+{% endblock content %}

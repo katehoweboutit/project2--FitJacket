@@ -1,3 +1,5 @@
+from typing import Any
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.utils import ErrorList
@@ -25,6 +27,7 @@ class FitUserCreationForm(UserCreationForm):
         if FitUser.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already in use.")
         return email
+
 
 
 """

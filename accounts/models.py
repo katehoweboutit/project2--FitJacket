@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.validators import validate_email
@@ -31,6 +33,8 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
     Lifestyle_Habits = models.TextField(blank=True)
     Additional_Notes = models.TextField(blank=True)
     fit_points = models.PositiveIntegerField(default=0)
+    id = models.AutoField(primary_key=True)
+    friends = models.TextField(blank=True)
 
     objects = CustomUserManager()
 
@@ -39,3 +43,4 @@ class FitUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+

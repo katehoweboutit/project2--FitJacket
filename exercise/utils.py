@@ -3,15 +3,15 @@ import requests
 from openai import OpenAI
 
 all_muscle_groups = ['abdominals', 'abductors', 'adductors', 'biceps', 'calves',
-                 'chest', 'forearms', 'glutes', 'hamstrings', 'lats', 'lower_back',
-                 'middle_back', 'neck', 'quadriceps', 'traps', 'triceps']
+                 'chest', 'forearms', 'glutes', 'hamstrings', 'lats', 'lower back',
+                 'middle back', 'neck', 'quadriceps', 'traps', 'triceps']
 
 def create_new_exercises(api_response):
     for exercise_info in api_response:
         Exercise.objects.create(
-            muscle_group=exercise_info['muscle'],
+            muscle_group=exercise_info['muscle'].replace("_", " "),
             name=exercise_info['name'],
-            equipment_needed=exercise_info['equipment'],
+            equipment_needed=exercise_info['equipment'].replace("_", " "),
             instructions=exercise_info['instructions']
         )
 
@@ -27,7 +27,7 @@ def update_db_exercises(muscle_groups):
         if muscle_group in Exercise.objects.values_list('muscle_group', flat=True):
             continue
 
-        api_url = f'https://api.api-ninjas.com/v1/exercises?muscle={muscle_group}'
+        api_url = f'https://api.api-ninjas.com/v1/exercises?muscle={muscle_group.replace(" ", "_")}'
         response = requests.get(api_url, headers={'X-Api-Key': 'OKMD5CjRpp/+YzrvUO4PRw==e4bBrbFUzF62n4Aj'})
         if response.status_code == requests.codes.ok:
             create_new_exercises(response.json())

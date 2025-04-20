@@ -13,15 +13,15 @@ from accounts.forms import FitUserCreationForm
 def add_friend(request):
     template_data = {}
     template_data['title'] = 'Friends'
-    users = FitUser.objects.exclude(username=request.user.username)
+    users = FitUser.objects
     template_data['users'] = users
     if request.method == 'GET':
         search_term = request.GET.get('search')
         if search_term:
         # show all friends with that in name
-            users = FitUser.objects.filter(first_name__icontains=search_term)
-            users_last = FitUser.objects.filter(last_name__icontains=search_term)
-            users_name = FitUser.objects.filter(username__icontains=search_term)
+            users = FitUser.objects.filter(first_name__icontains=search_term).exclude(username=request.user.username)
+            users_last = FitUser.objects.filter(last_name__icontains=search_term).exclude(username=request.user.username)
+            users_name = FitUser.objects.filter(username__icontains=search_term).exclude(username=request.user.username)
             users = users.union(users_last)
             users = users.union(users_name)
         else:

@@ -12,7 +12,20 @@
           <li class="list-group-item"><strong>Muscle Group:</strong> {{ template_data.exercise.exercise.muscle_group }}</li>
           <li class="list-group-item"><strong>Equipment Needed:</strong> {{ template_data.exercise.exercise.equipment_needed }}</li>
           <li class="list-group-item"><strong>Instructions:</strong> {{ template_data.exercise.exercise.instructions }}</li>
-          <li class="list-group-item"><strong>Duration:</strong> {{ template_data.exercise.duration_minutes }} minutes</li>
+          <li class="list-group-item" style="display: flex; align-items: center; gap: 8px;"><strong>Duration:</strong>
+              {{ template_data.exercise.duration_minutes }} minutes
+
+            {% if not template_data.exercise.completed %}
+              <form method="post" action="{% url 'exercise.viewExercise' id=template_data.exercise.id %}">
+                {% csrf_token %}
+                <button type="submit" name="action" value="lengthen" class="btn btn-success w-100">lengthen</button>
+              </form>
+              <form method="post" action="{% url 'exercise.viewExercise' id=template_data.exercise.id %}">
+                {% csrf_token %}
+                <button type="submit" name="action" value="shorten" class="btn btn-danger w-100">shorten</button>
+              </form>
+            {% endif %}
+
           <li class="list-group-item"><strong>FitPoints Reward:</strong> {{ template_data.exercise.fitpoint_reward }}</li>
         </ul>
 

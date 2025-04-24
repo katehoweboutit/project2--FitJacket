@@ -12,7 +12,6 @@
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
@@ -28,18 +27,12 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Muscle Group');
         data.addColumn('number', 'Time Spent');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
+        data.addRows('myFitness.randoList');
 
         // Set chart options
         var options = {'title':'Which Muscle Groups you use the most',
-                       'width':400,
-                       'height':300};
+                       'width':600,
+                       'height':450};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));

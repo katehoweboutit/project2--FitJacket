@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .utils import all_muscle_groups, update_db_exercises, update_assigned_exercises
+from .utils import all_muscle_groups, update_db_exercises, update_assigned_exercises, update_exercise_duration
 from .models import ExerciseAssignment
 
 def index(request):
@@ -28,6 +28,11 @@ def new_exercise(request):
 
 def view_exercise(request, id):
     exercise = ExerciseAssignment.objects.get(id=id)
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        update_exercise_duration(exercise, action)
+
     if exercise.user != request.user:
         return redirect('exercise.index')
 

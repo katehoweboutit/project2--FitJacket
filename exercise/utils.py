@@ -10,8 +10,8 @@ def create_new_exercises(api_response):
     for exercise_info in api_response:
         Exercise.objects.create(
             muscle_group=exercise_info['muscle'].replace("_", " "),
-            name=exercise_info['name'],
-            equipment_needed=exercise_info['equipment'].replace("_", " "),
+            name=exercise_info['name'].title(),
+            equipment_needed=exercise_info['equipment'].replace("_", " ").replace("other", "various"),
             instructions=exercise_info['instructions']
         )
 
@@ -147,3 +147,14 @@ def update_assigned_exercises(user, muscle_groups):
     gpt_response = get_api_exercises_response(user, exercise_options)
 
     create_exercise_assignments(user, gpt_response)
+
+def update_exercise_duration(exercise, action):
+    if action == 'lengthen':
+        exercise.duration_minutes += 5
+        exercise.fitpoint_reward = min(100, exercise.fitpoint_reward + 10)
+
+    elif action == 'shorten':
+        exercise.duration_minutes = max(2, exercise.duration_minutes - 5)
+        exercise.fitpoint_reward = max(5, exercise.fitpoint_reward - 10)
+
+    exercise.save()

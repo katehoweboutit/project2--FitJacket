@@ -1,17 +1,9 @@
-{% extends 'base.html' %}
-
-{% block content %}
-{% load static %}
-
-<div class="p-3">
-  Here are some stats about the fitness you have been doing!
-
-</div>
 <html>
   <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
@@ -25,12 +17,15 @@
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Muscle Group');
-        data.addColumn('number', 'Time Spent');
-        data.addRows('myFitness.randoList');
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        for (excercise of exerciseAssignments) {
+            data.addRows(createMyFitness.calculateFitnessing());
+        }
+
 
         // Set chart options
-        var options = {'title':'Which Muscle Groups you use the most',
+        var options = {'title':'Excersizes done by different muscle groups',
                        'width':600,
                        'height':450};
 
@@ -46,4 +41,3 @@
     <div id="chart_div"></div>
   </body>
 </html>
-{% endblock content %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import createMyFitness
+from .utils import get_user_activity_by_muscle
 def index(request):
     template_data = {}
     template_data['title'] = 'My Fitness'

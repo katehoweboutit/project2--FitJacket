@@ -6,7 +6,7 @@ class Exercise(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     equipment_needed = models.CharField(max_length=128)
-    instructions = models.CharField(max_length=500)
+    instructions = models.CharField(max_length=1000)
 
     def __str__(self):
         return self.name

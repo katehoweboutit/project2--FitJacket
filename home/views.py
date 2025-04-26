@@ -3,7 +3,10 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, 'home/index.html')
+    template_data = {}
+    template_data['title'] = 'Home'
+    return render(request, 'home/index.html',
+                  {'template_data': template_data})
 
 
 def about(request):

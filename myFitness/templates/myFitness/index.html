@@ -1,56 +1,36 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
 
-<div class="p-4">
-Trying something
-  <div class="container">
-
-{#    <!-- Create New Exercise -->#}
-{#    <div class="text-center mb-4">#}
-{#      <form action="{% url 'exercise.new_exercise' %}">#}
-{#        <button type="submit" class="btn btn-primary">➕ Create New Exercise</button>#}
-{#      </form>#}
-{#    </div>#}
-
-    <!-- Incomplete Exercises Section -->
-    <div class="mb-5">
-      <h3 class="mb-3 border-bottom pb-2">🏃 New / In-Progress Exercises</h3>
-      <div class="row">
-            <div class="col-md-4 col-lg-3 mb-4">
-              <div class="card h-100 shadow border-start border-4 border-primary">
-                <div class="card-body text-center">
-                  <h5 class="card-title">{{ exercise.exercise }}</h5>
-                  <a href="{% url 'myFitness.data' id=user.id %}" class="btn btn-outline-primary btn-sm">View Chart</a>
-                </div>
-              </div>
-            </div>
-      </div>
-    </div>
-
-{#    <!-- Completed Exercises Section -->#}
-{#    <div>#}
-{#      <h3 class="mb-3 border-bottom pb-2">✅ Completed Exercises</h3>#}
-{#      <div class="row">#}
-{#        {% for exercise in template_data.exercise_assignments %}#}
-{#          {% if exercise.completed %}#}
-{#            <div class="col-md-4 col-lg-3 mb-4">#}
-{#              <div class="card h-100 shadow-sm border-start border-4 border-success bg-light">#}
-{#                <div class="card-body text-center">#}
-{#                  <h5 class="card-title">{{ exercise.exercise }}</h5>#}
-{#                  <span class="badge bg-success mb-2">Completed</span>#}
-{#                  <p class="mb-1">{{ exercise.duration_minutes }} minutes</p>#}
-{#                  <p class="mb-2">{{ exercise.fitpoint_reward }} FitPoints</p>#}
-{#                  <a href="{% url 'exercise.viewExercise' id=exercise.id %}" class="btn btn-outline-success btn-sm">View Summary</a>#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
-{#          {% endif %}#}
-{#        {% endfor %}#}
-{#      </div>#}
-{#    </div>#}
-
-  </div>
+{% block content %}
+<div class="p-4 d-flex justify-content-center">
+    <div id="chart_div" style="width: 600px; height: 450px;"></div>
 </div>
 
-{% endblock content %}
+<!-- Load Google Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Muscle Group');
+        data.addColumn('number', 'Time Spent');
+
+        data.addRows([
+            {% for muscle, time in userActivity.items %}
+                ['{{ muscle }}', {{ time }}]{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]);
+
+        var options = {
+            title: 'Which Muscle Groups You Work Out the Most',
+            width: 600,
+            height: 450
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+{% endblock %}

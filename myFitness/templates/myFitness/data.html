@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="p-4">
+    <h3>Trying something</h3>
+    <div id="chart_div" style="width: 600px; height: 450px;"></div>
+</div>
+
+<!-- Load Google Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Muscle Group');
+        data.addColumn('number', 'Time Spent');
+
+        data.addRows([
+            {% for muscle, time in userActivity.items %}
+                ['{{ muscle }}', {{ time }}]{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]);
+
+        var options = {
+            title: 'Which Muscle Groups You Use the Most',
+            width: 600,
+            height: 450
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+{% endblock %}

@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-{% load static %}
-    <div class="p-3">
-    I'm afraid you haven't done any excersize :,(
-    </div>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 50vh;">
+  <div class="text-center">
+    <h4 class="mb-3">It looks like you haven't completed any exercises yet!</h4>
+    <p>Please return here once you have completed some.</p>
+  </div>
+</div>
 {% endblock %}

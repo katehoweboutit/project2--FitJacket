@@ -18,7 +18,7 @@
         data.addColumn('number', 'Time Spent');
 
         data.addRows([
-            {% for muscle, time in userActivity.items %}
+            {% for muscle, time in template_data.userActivity.items %}
                 ['{{ muscle }}', {{ time }}]{% if not forloop.last %},{% endif %}
             {% endfor %}
         ]);
